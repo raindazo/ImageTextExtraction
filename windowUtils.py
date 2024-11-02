@@ -2,8 +2,7 @@ import execution
 
 
 # 実行するオプションを起動
-def on_click(options):
+def on_click(chk_options):
     # オプション選択内容を取得
-    for i, option in enumerate(options):
-        print(f"オプション{i + 1}の状態: {option.get()}")  # TODO オプションを変数に分けて分岐する
-    execution.execution()
+    is_output_log = chk_options[0].get()
+    execution.execution(is_output_log)

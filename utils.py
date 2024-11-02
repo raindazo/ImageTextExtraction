@@ -16,7 +16,6 @@ def save_clipboard_picture():
 
     if isinstance(image, Image.Image):
         image.save(save_folder)
-        print(f"{const.SAVE_CLIPBOARD_PICTURE_EXIST_MESSAGE}{save_folder}")
         return save_folder
     else:
         print(const.SAVE_CLIPBOARD_PICTURE_NOT_EXIST_MESSAGE)
@@ -47,11 +46,13 @@ def delete_png_files():
         if tidying.endswith(const.FILE_EXTENSION_PNG):
             file_path = os.path.join(const.SCREENSHOT_FOLDER, tidying)
             os.remove(file_path)
-    print(const.DELETE_PNG_FILES_END_MESSAGE)
 
 
 # ログ出力
-def opt_output_log():
+def opt_output_log(ocr_text):
     file_path = os.path.join(const.SCREENSHOT_FOLDER, f"{const.TODAY}{const.FILE_EXTENSION_TXT}")
-    # TODO 出力する内容を考える
-    # TODO エラー時、通常終了時でエラー内容を変更する
+
+    with open(file_path, "a", encoding=const.ENCODING_UTF8) as log:
+        log.write(f"{const.EXECUTION_TIME} "
+                  f"{const.OPT_OUTPUT_LOG_MESSAGE}\n"
+                  f"{ocr_text}\n\n")
