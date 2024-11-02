@@ -16,10 +16,10 @@ def save_clipboard_picture():
 
     if isinstance(image, Image.Image):
         image.save(save_folder)
-        print(f"クリップボードの画像を保存しました：{save_folder}")
+        print(f"{const.SAVE_CLIPBOARD_PICTURE_EXIST_MESSAGE}{save_folder}")
         return save_folder
     else:
-        print("クリップボードに画像がありません")
+        print(const.SAVE_CLIPBOARD_PICTURE_NOT_EXIST_MESSAGE)
         return const.ABNORMAL_END
 
 
@@ -31,20 +31,27 @@ def execution_ocr(screenshot):
     tools = pyocr.get_available_tools()[0]
 
     img = Image.open(screenshot)
-    builder = pyocr.builders.TextBuilder(tesseract_layout=6)
-    return tools.image_to_string(img, lang='jpn', builder=builder)
+    builder = pyocr.builders.TextBuilder(tesseract_layout=const.TESSERACT_LAYOUT)
+    return tools.image_to_string(img, lang=const.OCR_LANG, builder=builder)
 
 
 # 文字列をクリップボードに保存
 def get_ocr_message(text):
     pyperclip.copy(text)
-    print(f"クリップボードに保存読み取った文字列を保存しました:{text}")
+    print(f"{const.GET_OCR_MESSAGE_END_MESSAGE}{text}")
 
 
 # ファイル内の.pngファイルを削除する
 def delete_png_files():
     for tidying in os.listdir(const.SCREENSHOT_FOLDER):
-        if tidying.endswith('.png'):
+        if tidying.endswith(const.FILE_EXTENSION_PNG):
             file_path = os.path.join(const.SCREENSHOT_FOLDER, tidying)
             os.remove(file_path)
-    print("お片付け完了！")
+    print(const.DELETE_PNG_FILES_END_MESSAGE)
+
+
+# ログ出力
+def opt_output_log():
+    file_path = os.path.join(const.SCREENSHOT_FOLDER, f"{const.TODAY}{const.FILE_EXTENSION_TXT}")
+    # TODO 出力する内容を考える
+    # TODO エラー時、通常終了時でエラー内容を変更する
