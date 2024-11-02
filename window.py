@@ -3,22 +3,30 @@ import tkinter as tk
 import windowUtils
 import const_enum as const
 
-root = tk.Tk()  # メインウィンドウの作成
-root.title(const.TITLE)
-root.geometry(const.GEOMETRY)  # ウィンドウサイズ設定
 
-option1 = tk.BooleanVar()
-check = tk.Checkbutton(root, text="オプション", variable=option1)
-
-options = [option1]
-check.pack()
-
-
+# ボタン押下時に引数を渡す
 def on_click():
     windowUtils.on_click(options)
 
 
-# スタートボタンの追加
+#######################
+#    メインウィンドウ    #
+#######################
+root = tk.Tk()
+root.title(const.TITLE)
+root.geometry(const.GEOMETRY)
+
+#######################
+#    ウィンドウ設置物    #
+#######################
+# ログを保存する
+var_output_log = tk.BooleanVar()
+chk_output_log = tk.Checkbutton(root, text=const.CHK_OUTPUT_LOG, variable=var_output_log)
+
+options = [var_output_log]
+chk_output_log.pack()
+
+# 実行ボタン設置
 start_button = tk.Button(root, text=const.START_BUTTON_TEXT, command=on_click)
 start_button.pack()
 
